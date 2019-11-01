@@ -102,10 +102,6 @@
     #include <Arduino.h>
     #include <Wire.h>
     #include <SPI.h>
-    #if M5STACK_SDCARD == 1
-    #include "FS.h"
-    #include "SD.h"
-    #endif
 
     #include "M5Display.h"
     #include "utility/Config.h"
@@ -173,8 +169,6 @@
     };
     
     extern M5Stack M5;
-    #define m5 M5
-    #define lcd Lcd
   #else
     #error “This library only supports boards with ESP32 processor.”
   #endif

@@ -14,8 +14,5 @@ for feature in \
 	echo "#ifndef $feature"
 	echo "#define $feature 1"
 	echo "#endif"
-	echo "#if $feature == 1"
-	echo "#warning $feature enabled"
-	echo "#endif"
 done
 ) > ./src/M5StackFeatures.h

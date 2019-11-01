@@ -27,11 +27,6 @@ void M5Stack::begin(bool LCDEnable, bool SDEnable, bool SerialEnable, bool I2CEn
     Lcd.begin();
   }
 
-  // TF Card
-  if (SDEnable == true) {
-    SD.begin(TFCARD_CS_PIN, SPI, 40000000);
-  }
-
   // TONE
   // Speaker.begin();
 

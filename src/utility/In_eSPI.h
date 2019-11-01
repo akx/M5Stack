@@ -114,16 +114,6 @@
   #endif
 #endif
 
-#ifdef SMOOTH_FONT
-  // Call up the SPIFFS FLASH filing system for the anti-aliased fonts
-  #define FS_NO_GLOBALS
-  #include <FS.h>
-
-  #ifdef ESP32
-    #include "SPIFFS.h"
-  #endif
-#endif
-
 #ifndef TFT_DC
   #define DC_C // No macro allocated so it generates no code
   #define DC_D // No macro allocated so it generates no code
@@ -921,7 +911,7 @@ class TFT_eSPI : public Print {
  public:
 
   // These are for the new antialiased fonts
-  void     loadFont(String fontName, fs::FS &ffs);
+  void     loadFont(String fontName, void* ffs);
   void     loadFont(String fontName, bool flash = true);
   void     unloadFont( void );
   bool     getUnicodeIndex(uint16_t unicode, uint16_t *index);
@@ -956,14 +946,14 @@ fontMetrics gFont = { 0, 0, 0, 0, 0, 0, 0 };
   uint32_t* gBitmap = NULL;   //file pointer to greyscale bitmap
 
   bool     fontLoaded = false; // Flags when a anti-aliased font is loaded
-  fs::File fontFile;
+  void* fontFile;
 
   private:
 
   void     loadMetrics(uint16_t gCount);
   uint32_t readInt32(void);
 
-  fs::FS   &fontFS = SPIFFS;
+  void* fontFS = NULL;
   bool     spiffs = true;
 #endif
 
