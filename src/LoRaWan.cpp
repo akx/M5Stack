@@ -30,6 +30,7 @@
   THE SOFTWARE.1  USA
 */
 
+#if M5STACK_LORA == 1
 #include "LoRaWan.h"
 
 const char *physTypeStr[10] = {"EU434", "EU868", "US915", "US915HYBRID", "AU915", "AS923", "CN470", "KR920", "CN470PREQUEL", "STE920"};
@@ -1043,3 +1044,4 @@ short LoRaWanClass::sendCommandAndWaitForResponse(char* command, char *response,
 
 
 LoRaWanClass lora;
+#endif

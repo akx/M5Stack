@@ -1,8 +1,8 @@
 // Copyright (c) Sandeep Mistry. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+#if M5STACK_LORA == 1
 #include "M5LoRa.h"
-
 // registers
 #define REG_FIFO                 0x00
 #define REG_OP_MODE              0x01
@@ -490,3 +490,4 @@ void LoRaClass::onDio0Rise() {
 }
 
 LoRaClass LoRa;
+#endif

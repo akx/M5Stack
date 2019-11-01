@@ -97,18 +97,22 @@
   #define _M5STACK_H_
   
   #if defined(ESP32)
-
     #include "gitTagVersion.h"
+    #include "M5StackFeatures.h"
     #include <Arduino.h>
     #include <Wire.h>
     #include <SPI.h>
+    #if M5STACK_SDCARD == 1
     #include "FS.h"
     #include "SD.h"
+    #endif
 
     #include "M5Display.h"
     #include "utility/Config.h"
     #include "utility/Button.h"
+    #if M5STACK_SPEAKER == 1
     #include "utility/Speaker.h"
+    #endif
     #include "utility/Power.h"
     #include "utility/CommUtil.h"
 
@@ -131,8 +135,11 @@
         Button BtnB = Button(BUTTON_B_PIN, true, DEBOUNCE_MS);
         Button BtnC = Button(BUTTON_C_PIN, true, DEBOUNCE_MS);
 
+
+        #if M5STACK_SPEAKER == 1
         // SPEAKER
         SPEAKER Speaker;
+        #endif
 
         // LCD
         M5Display Lcd = M5Display();

@@ -71,6 +71,7 @@ void M5Display::progressBar(int x, int y, int w, int h, uint8_t val) {
   fillRect(x + 1, y + 1, w * (((float)val) / 100.0), h - 1, 0x09F1);
 }
 
+#if M5STACK_QRCODE == 1
 #include "utility/qrcode.h"
 void M5Display::qrcode(const char *string, uint16_t x, uint16_t y, uint8_t width, uint8_t version) {
 
@@ -100,7 +101,9 @@ void M5Display::qrcode(const String &string, uint16_t x, uint16_t y, uint8_t wid
   string.toCharArray(buffer, len);
   qrcode(buffer, x, y, width, version);
 }
+#endif
 
+#if M5STACK_SDCARD == 1
 // These read 16- and 32-bit types from the SD card file.
 // BMP data is stored little-endian, Arduino is little-endian too.
 // May need to reverse subscript order if porting elsewhere.
@@ -179,6 +182,7 @@ void M5Display::drawBmpFile(fs::FS &fs, const char *path, uint16_t x, uint16_t y
   }
   bmpFS.close();
 }
+#endif
 
 // void M5Display::drawBmp(fs::FS &fs, const char *path, uint16_t x, uint16_t y) {
 //   drawBmpFile(fs, path, x, y);
@@ -191,6 +195,7 @@ void M5Display::drawBmpFile(fs::FS &fs, const char *path, uint16_t x, uint16_t y
   MIT license, all text above must be included in any redistribution
  ****************************************************/
 
+#if M5STACK_JPEG == 1
 /*
  * JPEG
  */
@@ -390,6 +395,7 @@ void M5Display::drawJpg(const uint8_t *jpg_data, size_t jpg_len, uint16_t x,
   jpgDecode(&jpeg, jpgRead);
 }
 
+#if M5STACK_SDCARD == 1
 void M5Display::drawJpgFile(fs::FS &fs, const char *path, uint16_t x, uint16_t y,
                             uint16_t maxWidth, uint16_t maxHeight, uint16_t offX,
                             uint16_t offY, jpeg_div_t scale) {
@@ -429,14 +435,14 @@ void M5Display::drawJpgFile(fs::FS &fs, const char *path, uint16_t x, uint16_t y
 
   file.close();
 }
-
+#endif
+#endif
 
 /*
  * PNG
  */
-
+#if M5STACK_PNG == 1
 #include "utility/pngle.h"
-#include <HTTPClient.h>
 
 typedef struct _png_draw_params {
   uint16_t x;
@@ -483,6 +489,7 @@ static void pngle_draw_callback(pngle_t *pngle, uint32_t x, uint32_t y, uint32_t
   }
 }
 
+#if M5STACK_SDCARD == 1
 void M5Display::drawPngFile(fs::FS &fs, const char *path, uint16_t x, uint16_t y,
                             uint16_t maxWidth, uint16_t maxHeight, uint16_t offX,
                             uint16_t offY, double scale, uint8_t alphaThreshold)
@@ -535,7 +542,11 @@ void M5Display::drawPngFile(fs::FS &fs, const char *path, uint16_t x, uint16_t y
   pngle_destroy(pngle);
   file.close();
 }
+#endif
 
+
+#if M5STACK_NETWORK == 1
+#include <HTTPClient.h>
 void M5Display::drawPngUrl(const char *url, uint16_t x, uint16_t y,
                             uint16_t maxWidth, uint16_t maxHeight, uint16_t offX,
                             uint16_t offY, double scale, uint8_t alphaThreshold)
@@ -607,3 +618,5 @@ void M5Display::drawPngUrl(const char *url, uint16_t x, uint16_t y,
   pngle_destroy(pngle);
   http.end();
 }
+#endif
+#endif
